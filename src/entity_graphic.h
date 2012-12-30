@@ -8,6 +8,7 @@
 #ifndef ENTITY_GRAPHIC_H_
 #define ENTITY_GRAPHIC_H_
 
+#include <stdbool.h>
 #include "SDL/SDL_opengl.h"
 
 #define LOAD_SPRITE_OK           0

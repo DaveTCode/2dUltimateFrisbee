@@ -321,98 +321,226 @@ EXIT_LABEL:
 }
 
 /*
- * parse_single_automaton
+ * create_automatons_from_xml
  *
- * A complex function that uses an external xml library to load the transition
- * file in and read out the seperate transition objects.
+ * Once this functions is complete all the structure will be in place in the 
+ * automaton_set to fill in the names of the automatons and transitions.
+
+ * It goes through the file twice. The first time counting the number of 
+ * automatons and then allocating the memory required for that number.
+ * The second time it creates each of the automatons and puts them into the
+ * automaton set.
  *
- * These are loaded into the automaton.
+ * They get entered into the array in the order that they appear in the file.
  *
- * If there are any missing fields or the file itself is malformed then a parse
- * error is returned rather than trying to handle it gracefully.
- *
- * Parameters: automaton_xml - The section of the xml file that contains this
- *                             xml.
- *             automaton - Must have already had the state table filled in.
- *                         Is returned with the transition table completed.
- *             automaton_set - Used to refer to other automatons by name.
- *             csv_filename - Will contain the value of the xml csv_file tag.
- *             lua_filename - Will contain the value of the xml lua_file tag.
- *
- * Returns: One of PARSE_SINGLE_AUTOMATON_RET_CODES.
+ * Parameters: xml_file - A reference to the structure that contains the entire
+ *                        xml.
+ *             automaton_set - The collection of automatons to be filled in.
+ *             state_callback - Callback function to generate the states for
+ *                              each of the automatons.
+ *             event_callback - Callback function to generate the events for
+ *                              each of the automatons.
  */
-int parse_single_automaton(ezxml_t automaton_xml,
-                           AUTOMATON *automaton,
-                           AUTOMATON_SET *automaton_set,
-                           char *csv_filename,
-                           char *lua_filename)
+void create_automatons_from_xml(ezxml_t *xml_file, 
+                                AUTOMATON_SET *automaton_set,
+                                int (*state_callback)(AUTOMATON_STATE ***,int),
+                                int (*event_callback)(AUTOMATON_EVENT ***))
 {
   /*
    * Local Variables.
    */
-  int ret_code = PARSE_SINGLE_AUTOMATON_OK;
-  ezxml_t xml_csv_filename;
-  ezxml_t xml_lua_filename;
-  ezxml_t xml_start_state;
+  int ii;
+  int num_automatons;
+  ezxml_t xml_automaton;
 
   /*
-   * Retrieve the filenames of the lua and csv files associated with this
-   * automaton.
+   * Count the number of automaton objects in this file. We need to know this
+   * so that we allocate the memory for the automaton array.
    */
-  xml_csv_filename = ezxml_child(automaton_xml, "csv_file");
-  xml_lua_filename = ezxml_child(automaton_xml, "lua_file");
-  if (NULL == xml_csv_filename)
+  num_automatons = 0;
+  for (xml_automaton = ezxml_child(*xml_file, "automaton");
+       xml_automaton;
+       xml_automaton = xml_automaton->next)
   {
-    DT_DEBUG_LOG("The transition file does not contain a csv filename\n");
-    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_CSV_FILENAME;
-    goto EXIT_LABEL;
+    num_automatons++;
   }
-  if (NULL == xml_lua_filename)
-  {
-    DT_DEBUG_LOG("The transition file does not contain a lua filename\n");
-    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_LUA_FILENAME;
-    goto EXIT_LABEL;
-  }
-  strncpy(csv_filename, xml_csv_filename->txt, MAX_INT_FILENAME_LEN);
-  strncpy(lua_filename, xml_lua_filename->txt, MAX_INT_FILENAME_LEN);
+  automaton_set->num_automatons = num_automatons;
 
   /*
-   * TODO: Does this need to be more intelligent?
-   * Get the basic start state for the automaton.
+   * Attempt to allocate the memory for the automaton array.
    */
-  xml_start_state = ezxml_child(automaton_xml, "start_state");
-  if (NULL == xml_start_state)
-  {
-    DT_DEBUG_LOG("The transition file does not have a start state\n");
-    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_START_STATE;
-    goto EXIT_LABEL;
-  }
+  automaton_set->automaton_array =
+                (AUTOMATON **) DT_MALLOC(sizeof(AUTOMATON *) * num_automatons);
 
   /*
-   * If we can't find the automaton state that is referred to then we don't
-   * use a default we just fail.
+   * Create each of the automatons individually.
    */
-  automaton->start_state = find_automaton_state_by_name(automaton,
-                                                        xml_start_state->txt);
-  if (NULL == automaton->start_state)
+  ii = 0;
+  for (xml_automaton = ezxml_child(*xml_file, "automaton");
+       xml_automaton;
+       xml_automaton = xml_automaton->next)
   {
-    DT_DEBUG_LOG("The transition file has an invalid start state (%s)\n",
-                 xml_start_state->txt);
-    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_INVALID_START_STATE;
-    goto EXIT_LABEL;
+    /*
+     * This allocated the memory and sets up the state, event tables.
+     */
+    automaton_set->automaton_array[ii] = create_automaton(state_callback,
+                                                          event_callback);
+    ii++;
   }
+}
+
+/*
+ * parse_transition_names
+ *
+ * Called once for each automaton in the xml. Creates the array of transitions
+ * and fills it in with the transition names. Does not do any link creation.
+ *
+ * Parameters: xml_automaton - The xml to read.
+ *             automaton - The automaton to fill in.
+ *
+ * Returns: One of AUTOMATON_XML_FILE_RET_CODES.
+ */
+int parse_transition_names(ezxml_t *xml_automaton, AUTOMATON *automaton)
+{
+  /*
+   * Local Variables.
+   */
+  ezxml_t xml_transition;
+  int num_transitions;
+  int ii;
+  int ret_code = AUTOMATON_XML_FILE_OK;
 
   /*
-   * Fill in links between automatons, states, and transitions.
+   * Count the number of transitions there are for this automaton.
    */
-  ret_code = fill_single_automaton_links(automaton_xml, 
-                                         automaton, 
-                                         automaton_set);
-  if (PARSE_SINGLE_AUTOMATON_OK != ret_code) goto EXIT_LABEL;
+  num_transitions = 0;
+  for (xml_transition = ezxml_child(*xml_automaton, "transition");
+       xml_transition;
+       xml_transition = xml_transition->next)
+  {
+    num_transitions++;
+  }
+  automaton->num_transitions = num_transitions;
+  DT_DEBUG_LOG("Automaton (%s) has (%i) transitions\n",
+               automaton->name,
+               num_transitions);
+
+  /*
+   * Allocate the memory required for the transition array.
+   */
+  automaton->transitions = (AUTOMATON_TRANSITION **) 
+                   DT_MALLOC(sizeof(AUTOMATON_TRANSITION *) * num_transitions);
+
+  /*
+   * Second pass through is to fill in the automaton names.
+   */
+  ii = 0;
+  for (xml_transition = ezxml_child(*xml_automaton, "transition");
+       xml_transition;
+       xml_transition = xml_transition->next)
+  {
+    /*
+     * Allocate the memory for this individual transition and set it's id.
+     */
+    automaton->transitions[ii] = create_automaton_transition();
+    automaton->transitions[ii]->id = ii;
+
+    /*
+     * Set the name of the transition. We can use this to refer to other 
+     * transitions.
+     *
+     * Note that we deliberately don't exist as soon as we find a bad
+     * transition so that we have a chance to create all of them.
+     * This provides a more useful collection of errors for the user.
+     */
+    if (NULL == ezxml_attr(xml_transition, "name"))
+    {
+      DT_DEBUG_LOG("Transition is missing name attribute in xml file.\n");
+      ret_code = AUTOMATON_XML_FILE_LINKS_FAIL;
+    }
+    else
+    {
+      strncpy(automaton->transitions[ii]->name,
+              ezxml_attr(xml_transition, "name"),
+              sizeof(automaton->transitions[ii]->name));
+      DT_DEBUG_LOG("Automaton (%s) has transition (%s)\n", 
+                   automaton->name,
+                   automaton->transitions[ii]->name)
+    }
+
+    ii++;
+  }
 
 EXIT_LABEL:
 
-  return(ret_code);
+  return ret_code;
+}
+
+/*
+ * parse_automaton_names
+ *
+ * Given a file with xml, fill in all the names that do not contain any 
+ * external references. This is the the automaton names and the transition
+ * names.
+ *
+ * Note that this also allocates all the memory required for the automatons
+ * themselves including the transition table and creating the individual
+ * transitions.
+ *
+ * Parameters: xml_file - The entire xml document.
+ *             automaton_set - The automaton set to fill in.
+ *
+ * Returns: One of AUTOMATON_XML_FILE_RET_CODES.
+ */
+int parse_automaton_names(ezxml_t *xml_file, AUTOMATON_SET *automaton_set)
+{
+  /*
+   * Local Variables.
+   */
+  int ret_code = AUTOMATON_XML_FILE_OK;
+  ezxml_t xml_automaton;
+  int ii;
+
+  /*
+   * Loop through all the automatons.
+   */
+  ii = 0;
+  for (xml_automaton = ezxml_child(*xml_file, "automaton");
+       xml_automaton;
+       xml_automaton = xml_automaton->next)
+  {
+    /*
+     * Set the name of the automaton. We refer to the automatons by name in the
+     * transitions.
+     */
+    if (NULL == ezxml_attr(xml_automaton, "name"))
+    {
+      DT_DEBUG_LOG("Automaton is missing name attribute in xml file.\n");
+      ret_code = AUTOMATON_XML_FILE_LINKS_FAIL;
+      goto EXIT_LABEL;
+    }
+    strncpy(automaton_set->automaton_array[ii]->name,
+            ezxml_attr(xml_automaton, "name"),
+            MAX_AUTOMATON_NAME_LEN);
+
+    /*
+     * We have the automaton name so now retrieve the transition names for
+     * the automaton. Note that this doesn't read into whether the transition
+     * is valid yet or not.
+     */
+    ret_code = parse_transition_names(&xml_automaton, 
+                                      automaton_set->automaton_array[ii]);
+    if (AUTOMATON_XML_FILE_OK != ret_code)
+    {
+      goto EXIT_LABEL;
+    }
+
+    ii++;
+  }
+
+EXIT_LABEL:
+
+  return ret_code;
 }
 
 /*
@@ -544,224 +672,96 @@ EXIT_LABEL:
 }
 
 /*
- * create_automatons_from_xml
+ * parse_single_automaton
  *
- * Once this functions is complete all the structure will be in place in the 
- * automaton_set to fill in the names of the automatons and transitions.
-
- * It goes through the file twice. The first time counting the number of 
- * automatons and then allocating the memory required for that number.
- * The second time it creates each of the automatons and puts them into the
- * automaton set.
+ * A complex function that uses an external xml library to load the transition
+ * file in and read out the seperate transition objects.
  *
- * They get entered into the array in the order that they appear in the file.
+ * These are loaded into the automaton.
  *
- * Parameters: xml_file - A reference to the structure that contains the entire
- *                        xml.
- *             automaton_set - The collection of automatons to be filled in.
- *             state_callback - Callback function to generate the states for
- *                              each of the automatons.
- *             event_callback - Callback function to generate the events for
- *                              each of the automatons.
+ * If there are any missing fields or the file itself is malformed then a parse
+ * error is returned rather than trying to handle it gracefully.
+ *
+ * Parameters: automaton_xml - The section of the xml file that contains this
+ *                             xml.
+ *             automaton - Must have already had the state table filled in.
+ *                         Is returned with the transition table completed.
+ *             automaton_set - Used to refer to other automatons by name.
+ *             csv_filename - Will contain the value of the xml csv_file tag.
+ *             lua_filename - Will contain the value of the xml lua_file tag.
+ *
+ * Returns: One of PARSE_SINGLE_AUTOMATON_RET_CODES.
  */
-void create_automatons_from_xml(ezxml_t *xml_file, 
-                                AUTOMATON_SET *automaton_set,
-                                int (*state_callback)(AUTOMATON_STATE ***,int),
-                                int (*event_callback)(AUTOMATON_EVENT ***))
+int parse_single_automaton(ezxml_t automaton_xml,
+                           AUTOMATON *automaton,
+                           AUTOMATON_SET *automaton_set,
+                           char *csv_filename,
+                           char *lua_filename)
 {
   /*
    * Local Variables.
    */
-  int ii;
-  int num_automatons;
-  ezxml_t xml_automaton;
+  int ret_code = PARSE_SINGLE_AUTOMATON_OK;
+  ezxml_t xml_csv_filename;
+  ezxml_t xml_lua_filename;
+  ezxml_t xml_start_state;
 
   /*
-   * Count the number of automaton objects in this file. We need to know this
-   * so that we allocate the memory for the automaton array.
+   * Retrieve the filenames of the lua and csv files associated with this
+   * automaton.
    */
-  num_automatons = 0;
-  for (xml_automaton = ezxml_child(*xml_file, "automaton");
-       xml_automaton;
-       xml_automaton = xml_automaton->next)
+  xml_csv_filename = ezxml_child(automaton_xml, "csv_file");
+  xml_lua_filename = ezxml_child(automaton_xml, "lua_file");
+  if (NULL == xml_csv_filename)
   {
-    num_automatons++;
+    DT_DEBUG_LOG("The transition file does not contain a csv filename\n");
+    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_CSV_FILENAME;
+    goto EXIT_LABEL;
   }
-  automaton_set->num_automatons = num_automatons;
-
-  /*
-   * Attempt to allocate the memory for the automaton array.
-   */
-  automaton_set->automaton_array =
-                (AUTOMATON **) DT_MALLOC(sizeof(AUTOMATON *) * num_automatons);
-
-  /*
-   * Create each of the automatons individually.
-   */
-  ii = 0;
-  for (xml_automaton = ezxml_child(*xml_file, "automaton");
-       xml_automaton;
-       xml_automaton = xml_automaton->next)
+  if (NULL == xml_lua_filename)
   {
-    /*
-     * This allocated the memory and sets up the state, event tables.
-     */
-    automaton_set->automaton_array[ii] = create_automaton(state_callback,
-                                                          event_callback);
-    ii++;
+    DT_DEBUG_LOG("The transition file does not contain a lua filename\n");
+    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_LUA_FILENAME;
+    goto EXIT_LABEL;
   }
-}
-
-/*
- * parse_automaton_names
- *
- * Given a file with xml, fill in all the names that do not contain any 
- * external references. This is the the automaton names and the transition
- * names.
- *
- * Note that this also allocates all the memory required for the automatons
- * themselves including the transition table and creating the individual
- * transitions.
- *
- * Parameters: xml_file - The entire xml document.
- *             automaton_set - The automaton set to fill in.
- *
- * Returns: One of AUTOMATON_XML_FILE_RET_CODES.
- */
-int parse_automaton_names(ezxml_t *xml_file, AUTOMATON_SET *automaton_set)
-{
-  /*
-   * Local Variables.
-   */
-  int ret_code = AUTOMATON_XML_FILE_OK;
-  ezxml_t xml_automaton;
-  int ii;
+  strncpy(csv_filename, xml_csv_filename->txt, MAX_INT_FILENAME_LEN);
+  strncpy(lua_filename, xml_lua_filename->txt, MAX_INT_FILENAME_LEN);
 
   /*
-   * Loop through all the automatons.
+   * TODO: Does this need to be more intelligent?
+   * Get the basic start state for the automaton.
    */
-  ii = 0;
-  for (xml_automaton = ezxml_child(*xml_file, "automaton");
-       xml_automaton;
-       xml_automaton = xml_automaton->next)
+  xml_start_state = ezxml_child(automaton_xml, "start_state");
+  if (NULL == xml_start_state)
   {
-    /*
-     * Set the name of the automaton. We refer to the automatons by name in the
-     * transitions.
-     */
-    if (NULL == ezxml_attr(xml_automaton, "name"))
-    {
-      DT_DEBUG_LOG("Automaton is missing name attribute in xml file.\n");
-      ret_code = AUTOMATON_XML_FILE_LINKS_FAIL;
-      goto EXIT_LABEL;
-    }
-    strncpy(automaton_set->automaton_array[ii]->name,
-            ezxml_attr(xml_automaton, "name"),
-            MAX_AUTOMATON_NAME_LEN);
-
-    /*
-     * We have the automaton name so now retrieve the transition names for
-     * the automaton. Note that this doesn't read into whether the transition
-     * is valid yet or not.
-     */
-    ret_code = parse_transition_names(&xml_automaton, 
-                                      automaton_set->automaton_array[ii]);
-    if (AUTOMATON_XML_FILE_OK != ret_code)
-    {
-      goto EXIT_LABEL;
-    }
-
-    ii++;
+    DT_DEBUG_LOG("The transition file does not have a start state\n");
+    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_MISSING_START_STATE;
+    goto EXIT_LABEL;
   }
+
+  /*
+   * If we can't find the automaton state that is referred to then we don't
+   * use a default we just fail.
+   */
+  automaton->start_state = find_automaton_state_by_name(automaton,
+                                                        xml_start_state->txt);
+  if (NULL == automaton->start_state)
+  {
+    DT_DEBUG_LOG("The transition file has an invalid start state (%s)\n",
+                 xml_start_state->txt);
+    ret_code = PARSE_SINGLE_AUTOMATON_LOAD_INVALID_START_STATE;
+    goto EXIT_LABEL;
+  }
+
+  /*
+   * Fill in links between automatons, states, and transitions.
+   */
+  ret_code = fill_single_automaton_links(automaton_xml, 
+                                         automaton, 
+                                         automaton_set);
+  if (PARSE_SINGLE_AUTOMATON_OK != ret_code) goto EXIT_LABEL;
 
 EXIT_LABEL:
 
-  return ret_code;
-}
-
-/*
- * parse_transition_names
- *
- * Called once for each automaton in the xml. Creates the array of transitions
- * and fills it in with the transition names. Does not do any link creation.
- *
- * Parameters: xml_automaton - The xml to read.
- *             automaton - The automaton to fill in.
- *
- * Returns: One of AUTOMATON_XML_FILE_RET_CODES.
- */
-int parse_transition_names(ezxml_t *xml_automaton, AUTOMATON *automaton)
-{
-  /*
-   * Local Variables.
-   */
-  ezxml_t xml_transition;
-  int num_transitions;
-  int ii;
-  int ret_code = AUTOMATON_XML_FILE_OK;
-
-  /*
-   * Count the number of transitions there are for this automaton.
-   */
-  num_transitions = 0;
-  for (xml_transition = ezxml_child(*xml_automaton, "transition");
-       xml_transition;
-       xml_transition = xml_transition->next)
-  {
-    num_transitions++;
-  }
-  automaton->num_transitions = num_transitions;
-  DT_DEBUG_LOG("Automaton (%s) has (%i) transitions\n",
-               automaton->name,
-               num_transitions);
-
-  /*
-   * Allocate the memory required for the transition array.
-   */
-  automaton->transitions = (AUTOMATON_TRANSITION **) 
-                   DT_MALLOC(sizeof(AUTOMATON_TRANSITION *) * num_transitions);
-
-  /*
-   * Second pass through is to fill in the automaton names.
-   */
-  ii = 0;
-  for (xml_transition = ezxml_child(*xml_automaton, "transition");
-       xml_transition;
-       xml_transition = xml_transition->next)
-  {
-    /*
-     * Allocate the memory for this individual transition and set it's id.
-     */
-    automaton->transitions[ii] = create_automaton_transition();
-    automaton->transitions[ii]->id = ii;
-
-    /*
-     * Set the name of the transition. We can use this to refer to other 
-     * transitions.
-     *
-     * Note that we deliberately don't exist as soon as we find a bad
-     * transition so that we have a chance to create all of them.
-     * This provides a more useful collection of errors for the user.
-     */
-    if (NULL == ezxml_attr(xml_transition, "name"))
-    {
-      DT_DEBUG_LOG("Transition is missing name attribute in xml file.\n");
-      ret_code = AUTOMATON_XML_FILE_LINKS_FAIL;
-    }
-    else
-    {
-      strncpy(automaton->transitions[ii]->name,
-              ezxml_attr(xml_transition, "name"),
-              sizeof(automaton->transitions[ii]->name));
-      DT_DEBUG_LOG("Automaton (%s) has transition (%s)\n", 
-                   automaton->name,
-                   automaton->transitions[ii]->name)
-    }
-
-    ii++;
-  }
-
-EXIT_LABEL:
-
-  return ret_code;
+  return(ret_code);
 }

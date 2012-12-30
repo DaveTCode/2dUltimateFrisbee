@@ -8,7 +8,7 @@
 #ifndef CONFIG_MAP_H_
 #define CONFIG_MAP_H_
 
-
+#include <stdbool.h>
 #include <strmap/strmap.h>
 
 /*

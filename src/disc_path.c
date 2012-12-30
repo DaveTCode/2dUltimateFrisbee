@@ -204,6 +204,91 @@ void destroy_disc_position_list(DISC_POSITION *start_position)
 }
 
 /*
+ * disc_position_at_time_nearest
+ *
+ * Given a disc path and a time t we want to find which of the pre calculated
+ * intervals is the nearest to the desired.
+ *
+ * If t goes beyond the amount of time the disc path exists for then we return
+ * the last position calculated.
+ *
+ * DO NOT CALL DIRECTLY - This is called by the general disc_position_at_time
+ * function and does not include any error checking on variables.
+ *
+ * Parameters: disc_path - The path of the disc. Must be non null.
+ *             before - The last pre calculated interval before the time t.
+ *             after - The next pre calculated point in the path after the
+ *                     before variable.
+ *             t - The time that we want to know the position for.
+ *             time_at_position_before - The absolute time in ms at the
+ *                                       pre calculated value before.
+ *             result - Will contain the nearest position as a vector.
+ */
+void disc_path_find_nearest_pos(DISC_PATH *disc_path,
+                                DISC_POSITION *before,
+                                DISC_POSITION *after,
+                                Uint32 t,
+                                Uint32 time_at_position_before,
+                                VECTOR3 *result)
+{
+  /*
+   * Determine which of two positions is the closest to the required time.
+   */
+  if (t - time_at_position_before < (Uint32) (disc_path->interval / 2))
+  {
+    vector_copy_values(result, &(before->position));
+  }
+  else
+  {
+    vector_copy_values(result, &(after->position));
+  }
+}
+
+/*
+ * disc_path_find_interp_distance
+ *
+ * Given two adjacent position in a disc path, and a time that is somewhere
+ * between them this function can be used to give a linearly interpolated
+ * guess of where the disc will be in x,y,z coordinates at the time t.
+ *
+ * IMPORTANT - This function has no error checking and should NEVER be called
+ * directly. Always use the generic function disc_position_at_time instead.
+ *
+ * Parameters: disc_path - Contains the information like interval time.
+ *             before - The last pre calculated interval before the time t.
+ *             after - The next pre calculated point in the path after the
+ *                     before variable.
+ *             t - The time in milliseconds. Must be between before and after.
+ *             time_at_position_before - The absolute time in ms at the
+ *                                       pre calculated value before.
+ *             x, y, z - Will contain the interpolated position.
+ */
+void disc_path_find_interp_distance(DISC_PATH *disc_path,
+                                    DISC_POSITION *before,
+                                    DISC_POSITION *after,
+                                    Uint32 t,
+                                    Uint32 time_at_position_before,
+                                    VECTOR3 *result)
+{
+  /*
+   * Local Variables
+   */
+  float scaling_factor = (float) (disc_path->interval / 
+                                  (t - time_at_position_before));
+
+  /*
+   * Calculate the linear interpolated value of x,y and z using the ratio of
+   * the distances.
+   */
+  result->x = before->position.x +
+                    (after->position.x - before->position.x) * scaling_factor;
+  result->y = before->position.y +
+                    (after->position.y - before->position.y) * scaling_factor;
+  result->z = before->position.z +
+                    (after->position.z - before->position.z) * scaling_factor;
+}
+
+/*
  * disc_position_at_time
  *
  * Finds where the disc will be at time t where t is a millisecond value as
@@ -323,89 +408,4 @@ int disc_position_at_time(DISC_PATH *disc_path,
   EXIT_LABEL:
 
   return(ret_code);
-}
-
-/*
- * disc_position_at_time_nearest
- *
- * Given a disc path and a time t we want to find which of the pre calculated
- * intervals is the nearest to the desired.
- *
- * If t goes beyond the amount of time the disc path exists for then we return
- * the last position calculated.
- *
- * DO NOT CALL DIRECTLY - This is called by the general disc_position_at_time
- * function and does not include any error checking on variables.
- *
- * Parameters: disc_path - The path of the disc. Must be non null.
- *             before - The last pre calculated interval before the time t.
- *             after - The next pre calculated point in the path after the
- *                     before variable.
- *             t - The time that we want to know the position for.
- *             time_at_position_before - The absolute time in ms at the
- *                                       pre calculated value before.
- *             result - Will contain the nearest position as a vector.
- */
-void disc_path_find_nearest_pos(DISC_PATH *disc_path,
-                                DISC_POSITION *before,
-                                DISC_POSITION *after,
-                                Uint32 t,
-                                Uint32 time_at_position_before,
-                                VECTOR3 *result)
-{
-  /*
-   * Determine which of two positions is the closest to the required time.
-   */
-  if (t - time_at_position_before < (Uint32) (disc_path->interval / 2))
-  {
-    vector_copy_values(result, &(before->position));
-  }
-  else
-  {
-    vector_copy_values(result, &(after->position));
-  }
-}
-
-/*
- * disc_path_find_interp_distance
- *
- * Given two adjacent position in a disc path, and a time that is somewhere
- * between them this function can be used to give a linearly interpolated
- * guess of where the disc will be in x,y,z coordinates at the time t.
- *
- * IMPORTANT - This function has no error checking and should NEVER be called
- * directly. Always use the generic function disc_position_at_time instead.
- *
- * Parameters: disc_path - Contains the information like interval time.
- *             before - The last pre calculated interval before the time t.
- *             after - The next pre calculated point in the path after the
- *                     before variable.
- *             t - The time in milliseconds. Must be between before and after.
- *             time_at_position_before - The absolute time in ms at the
- *                                       pre calculated value before.
- *             x, y, z - Will contain the interpolated position.
- */
-void disc_path_find_interp_distance(DISC_PATH *disc_path,
-                                    DISC_POSITION *before,
-                                    DISC_POSITION *after,
-                                    Uint32 t,
-                                    Uint32 time_at_position_before,
-                                    VECTOR3 *result)
-{
-  /*
-   * Local Variables
-   */
-  float scaling_factor = (float) (disc_path->interval / 
-                                  (t - time_at_position_before));
-
-  /*
-   * Calculate the linear interpolated value of x,y and z using the ratio of
-   * the distances.
-   */
-  result->x = before->position.x +
-                    (after->position.x - before->position.x) * scaling_factor;
-  result->y = before->position.y +
-                    (after->position.y - before->position.y) * scaling_factor;
-  result->z = before->position.z +
-                    (after->position.z - before->position.z) * scaling_factor;
 }

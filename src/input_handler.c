@@ -191,21 +191,21 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
    * not null from the moment a mouse button is pressed until it is released
    * and the disc attributes are calculated from it.
    */
-  if (match_state->throw->in_progress)
+  if (match_state->match_throw->in_progress)
   {
     if (event->type == SDL_MOUSEBUTTONUP)
     {
-      if (event->button == match_state->throw->start_state->create_button)
+      if (event->button == match_state->match_throw->start_state->create_button)
       {
         /*
          * Fill in the details for the end state of the throw from the event.
          * The throw object was created when the mouse button was first pressed
          * and that created the end_state object underlying it.
          */
-        match_state->throw->end_state->screen_x = event->x;
-        match_state->throw->end_state->screen_y = event->y;
-        match_state->throw->end_state->create_time = SDL_GetTicks();
-        match_state->throw->end_state->create_button = event->button;
+        match_state->match_throw->end_state->screen_x = event->x;
+        match_state->match_throw->end_state->screen_y = event->y;
+        match_state->match_throw->end_state->create_time = SDL_GetTicks();
+        match_state->match_throw->end_state->create_button = event->button;
 
         /*
          * Convert the screen coordinates into world coordinates for use in
@@ -215,13 +215,13 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
             match_state->camera_handler,
             event->x,
             event->y,
-            &(match_state->throw->end_state->world_x),
-            &(match_state->throw->end_state->world_y));
+            &(match_state->match_throw->end_state->world_x),
+            &(match_state->match_throw->end_state->world_y));
 
         /*
          * Set disc state using the throw object that has just been created.
          */
-        set_init_disc_conditions(match_state->disc, match_state->throw);
+        set_init_disc_conditions(match_state->disc, match_state->match_throw);
 
         /*
          * Create a disc path to associate with the current throw. This disc
@@ -256,7 +256,7 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
         /*
          * Set the throw in progress flag to false for next time.
          */
-        match_state->throw->in_progress = false;
+        match_state->match_throw->in_progress = false;
       }
       else
       {
@@ -266,7 +266,7 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
          * We don't need to do anything with the created throw as it will just
          * get overwritten the next time that a moust button is clicked.
          */
-        match_state->throw->in_progress = false;
+        match_state->match_throw->in_progress = false;
       }
     }
   }
@@ -280,10 +280,10 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
         /*
          * Set the initial variables for the mouse state.
          */
-        match_state->throw->start_state->screen_x = event->x;
-        match_state->throw->start_state->screen_y = event->y;
-        match_state->throw->start_state->create_time = SDL_GetTicks();
-        match_state->throw->start_state->create_button = event->button;
+        match_state->match_throw->start_state->screen_x = event->x;
+        match_state->match_throw->start_state->screen_y = event->y;
+        match_state->match_throw->start_state->create_time = SDL_GetTicks();
+        match_state->match_throw->start_state->create_button = event->button;
 
         /*
          * Convert the screen coordinates into world coordinates for use in
@@ -295,14 +295,14 @@ void handle_mousebutton_event(SDL_MouseButtonEvent *event,
             match_state->camera_handler,
             event->x,
             event->y,
-            &(match_state->throw->start_state->world_x),
-            &(match_state->throw->start_state->world_y));
+            &(match_state->match_throw->start_state->world_x),
+            &(match_state->match_throw->start_state->world_y));
 
         /*
          * By telling the match state that there is a throw in progress it
          * means that we can both complete the throw or cancel it.
          */
-        match_state->throw->in_progress = true;
+        match_state->match_throw->in_progress = true;
       }
     }
   }

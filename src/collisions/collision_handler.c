@@ -52,50 +52,25 @@ bool test_cube_collision(VECTOR3 *obj1_cornerA,
 }
 
 /*
- * detect_and_handle_collisions
+ * handle_player_player_collision
  *
- * The main entrance point for the collision handler. This function DOES
- * modify the player coordinates directly.
+ * This function is called with a pair of players which have had their
+ * bounding boxes collide.
  *
- * The ordering of collision detection and handling in this function is mostly
- * unimportant; although we have not decoupled the detection and handling
- * stages as we should the likelihood of it having a negative effect on the
- * game is extremely minimal. See documentation for a full discussion of
- * potential problems.
+ * At present this is handled simply by putting them back to where they were
+ * before the collision took place. This is a very simplistic way of dealing
+ * with the problem but should be reasonably realistic for small update times.
  *
- * Parameters: teams - Contains all the players in the game.
- *             players_per_team - The number of players in each team.
- *             disc - The disc object in use during the game.
+ * Parameters: player1, player2 - Ordering of players in parameters is
+ *                                irrelevant to this function.
  */
-void detect_and_handle_collisions(TEAM **teams,
-                                  int players_per_team,
-                                  DISC *disc)
+void handle_player_player_collision(PLAYER *player1, PLAYER *player2)
 {
-  /*
-   * Local Variables.
-   */
-  int ii;
-
-  /*
-   * Player player collisions detected and handled first.
-   */
-  detect_player_player_collisions(teams, players_per_team);
-
-  /*
-   * Once player player collisions all resolved do disc player collisions.
-   */
-  handle_player_disc_collisions(teams, players_per_team, disc);
-
-  /*
-   * Commit the new positions as they have now been resolved to avoid
-   * conflicts.
-   */
-  for (ii = 0; ii < players_per_team; ii++)
-  {
-    complete_player_coords_update(teams[0]->players[ii]);
-    complete_player_coords_update(teams[1]->players[ii]);
-  }
-  vector_copy_values(&(disc->position), &(disc->new_position));
+  //DT_DEBUG_LOG("Collision occurred between players (%i:%i) and (%i:%i)\n",
+  //             player1->team_id, player1->player_id,
+  //             player2->team_id, player2->player_id);
+  //revert_player_coords_update(player1);
+  //revert_player_coords_update(player2);
 }
 
 void detect_player_player_collisions(TEAM *teams[], int players_per_team)
@@ -154,28 +129,6 @@ void detect_player_player_collisions(TEAM *teams[], int players_per_team)
       }
     }
   }
-}
-
-/*
- * handle_player_player_collision
- *
- * This function is called with a pair of players which have had their
- * bounding boxes collide.
- *
- * At present this is handled simply by putting them back to where they were
- * before the collision took place. This is a very simplistic way of dealing
- * with the problem but should be reasonably realistic for small update times.
- *
- * Parameters: player1, player2 - Ordering of players in parameters is
- *                                irrelevant to this function.
- */
-void handle_player_player_collision(PLAYER *player1, PLAYER *player2)
-{
-  //DT_DEBUG_LOG("Collision occurred between players (%i:%i) and (%i:%i)\n",
-  //             player1->team_id, player1->player_id,
-  //             player2->team_id, player2->player_id);
-  //revert_player_coords_update(player1);
-  //revert_player_coords_update(player2);
 }
 
 /*
@@ -262,4 +215,51 @@ void handle_player_disc_collisions(TEAM **teams,
       }
     }
   }
+}
+
+/*
+ * detect_and_handle_collisions
+ *
+ * The main entrance point for the collision handler. This function DOES
+ * modify the player coordinates directly.
+ *
+ * The ordering of collision detection and handling in this function is mostly
+ * unimportant; although we have not decoupled the detection and handling
+ * stages as we should the likelihood of it having a negative effect on the
+ * game is extremely minimal. See documentation for a full discussion of
+ * potential problems.
+ *
+ * Parameters: teams - Contains all the players in the game.
+ *             players_per_team - The number of players in each team.
+ *             disc - The disc object in use during the game.
+ */
+void detect_and_handle_collisions(TEAM **teams,
+                                  int players_per_team,
+                                  DISC *disc)
+{
+  /*
+   * Local Variables.
+   */
+  int ii;
+
+  /*
+   * Player player collisions detected and handled first.
+   */
+  detect_player_player_collisions(teams, players_per_team);
+
+  /*
+   * Once player player collisions all resolved do disc player collisions.
+   */
+  handle_player_disc_collisions(teams, players_per_team, disc);
+
+  /*
+   * Commit the new positions as they have now been resolved to avoid
+   * conflicts.
+   */
+  for (ii = 0; ii < players_per_team; ii++)
+  {
+    complete_player_coords_update(teams[0]->players[ii]);
+    complete_player_coords_update(teams[1]->players[ii]);
+  }
+  vector_copy_values(&(disc->position), &(disc->new_position));
 }

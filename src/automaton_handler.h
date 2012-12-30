@@ -51,14 +51,14 @@ struct automaton_set *create_automaton_set(
                                       int(*)(struct automaton_state ***, int),
                                       int(*)(struct automaton_event ***),
                                       struct match_state *);
-void destroy_automaton_set(AUTOMATON_SET *);
+void destroy_automaton_set(struct automaton_set *);
 AUTOMATON_HANDLER *create_automaton_handler(
                                       char *,
                                       char *,
                                       int(*)(struct automaton_state ***, int),
                                       int(*)(struct automaton_event ***),
                                       struct match_state *);
-void destroy_automaton_handler(AUTOMATON_HANDLER *);
-struct automaton *get_automaton_by_name(AUTOMATON_SET *, char *);
+void destroy_automaton_handler(struct automaton_handler *);
+struct automaton *get_automaton_by_name(struct automaton_set *, char *);
 
 #endif /* AUTOMATON_HANDLER_H_ */

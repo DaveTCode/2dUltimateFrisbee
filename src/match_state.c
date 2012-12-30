@@ -115,7 +115,7 @@ MATCH_STATE *create_match_state(unsigned int hard_cap,
    * Set the throw to null to start, this will be created when the user starts
    * a throw.
    */
-  state->throw = create_throw();
+  state->match_throw = create_throw();
 
   /*
    * Create a disc object for this game.
@@ -206,7 +206,7 @@ void destroy_match_state(MATCH_STATE *state)
   destroy_camera_handler(state->camera_handler);
   destroy_disc(state->disc);
   destroy_pitch(state->pitch);
-  destroy_throw(state->throw);
+  destroy_throw(state->match_throw);
   destroy_key_input_state(state->key_input_state);
   destroy_mouse_input_state(state->mouse_input_state);
   destroy_animation_handler(state->animation_handler);

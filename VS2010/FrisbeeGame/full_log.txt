@@ -1,0 +1,126 @@
+Good config file line found: ANIMATION_MS_PER_FRAMES=100
+
+key:ANIMATION_MS_PER_FRAMES value:100 added
+Good config file line found: MAX_FPS=60
+key:MAX_FPS value:60 added
+Automaton (pull_automaton) has (6) transitions
+Automaton (pull_automaton) has transition (AmICatchingPull)
+Automaton (pull_automaton) has transition (IsPullCatchable)
+Automaton (pull_automaton) has transition (IsDiscLandingOutOfBounds)
+Automaton (pull_automaton) has transition (DecideOnPosition)
+Automaton (pull_automaton) has transition (DecideStartFromBrick)
+Automaton (pull_automaton) has transition (SwitchToVerticalStack)
+Automaton (vertical_stack_automaton) has (6) transitions
+Automaton (vertical_stack_automaton) has transition (DecideWhereToWait)
+Automaton (vertical_stack_automaton) has transition (AmIInStack)
+Automaton (vertical_stack_automaton) has transition (ShouldICut)
+Automaton (vertical_stack_automaton) has transition (ShouldIClear)
+Automaton (vertical_stack_automaton) has transition (ChangeCut)
+Automaton (vertical_stack_automaton) has transition (MoveToDiscUpAutomaton)
+Automaton (disc_in_air_automaton) has (5) transitions
+Automaton (disc_in_air_automaton) has transition (ShouldIChase)
+Automaton (disc_in_air_automaton) has transition (DecideWhereToWait)
+Automaton (disc_in_air_automaton) has transition (WillWeCatch)
+Automaton (disc_in_air_automaton) has transition (DecideWhoToMark)
+Automaton (disc_in_air_automaton) has transition (SwitchToVertStack)
+Good csv file line found: state_waiting,AmICatchingPull,,,,SwitchToVerticalStack,,
+Good csv file line found: state_catching_pull,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_picking_up_disc,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_move_disc_to_brick,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_move_disc_to_sideline,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_running,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_intercept_disc,,,,,SwitchToVerticalStack,,
+Good csv file line found: state_waiting,,,,,,,MoveToDiscUpAutomaton
+Good csv file line found: state_running,,,,,AmIInStack,,MoveToDiscUpAutomaton
+Good csv file line found: state_running,,,,,,,,SwitchToVertStack
+Good csv file line found: state_intercept_disc,,,,,,,,SwitchToVertStack
+Good csv file line found: state_follow_player,,,,,,,,SwitchToVertStack
+Automaton (do_nothing_automaton) has (0) transitions
+Good csv file line found: state_waiting,,,,,,,
+Good csv file line found: state_catching_pull,,,,,,,
+Good csv file line found: state_picking_up_disc,,,,,,,
+Good csv file line found: state_move_disc_to_brick,,,,,,,
+Good csv file line found: state_move_disc_to_sideline,,,,,,,
+Good csv file line found: state_running,,,,,,,
+Pitch created: length 100, width 37, endzone_depth 18, line_width 1.000000
+Player (0:1) has collided with the disc
+Player (0:1) catching disc
+Finding d1: 
+	velocity = (2.718245,0.902019,0.000000), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (0.949108,0.314951,0.000000)
+Calculated forces on disc from: 
+	vel = (2.718245, 0.902019, 0.000000),
+	roll = -1.480000, pitch = -13.940000, spin = -54.250000 and alpha = -0.000000.
+Returned values are: 
+	lift = 0.057508, drag = 0.026574, pitch = -0.016642,roll = -0.011100, spin = 0.000143
+Computed new angular velocities:
+	pitch_vel = 0.261079, roll velocity = 0.174138
+Disc velocity pre update: (2.718245, 0.902019, 0.000000)
+Disc position pre update: (10.000000, 10.000000, 1.500000)
+Disc velocity post update: (2.430002, 0.806368, -18.930769)
+Disc position post update: (14.860004, 11.612737, -36.361538)
+Finding d1: 
+	velocity = (2.430002,0.806368,-18.930769), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (0.949108,0.314951,0.000000)
+Calculated forces on disc from: 
+	vel = (2.430002, 0.806368, -18.930769),
+	roll = 0.174138, pitch = 0.261079, spin = -54.250000 and alpha = 1.436367.
+Returned values are: 
+	lift = 56.948074, drag = 79.725281, pitch = 0.586322,roll = -0.567847, spin = 0.006347
+Computed new angular velocities:
+	pitch_vel = -9.198114, roll velocity = 8.908271
+Disc velocity pre update: (2.430002, 0.806368, -18.930769)
+Disc position pre update: (10.000000, 10.000000, 1.500000)
+Disc velocity post update: (498.667999, 165.477264, 951.635193)
+Disc position post update: (1012.195984, 342.567261, 1866.908813)
+Finding d1: 
+	velocity = (498.667999,165.477264,951.635193), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (0.949108,0.314951,0.000000)
+Calculated forces on disc from: 
+	vel = (498.667999, 165.477264, 951.635193),
+	roll = 8.908271, pitch = -9.198114, spin = -54.250000 and alpha = -1.066335.
+Returned values are: 
+	lift = -122461.406250, drag = 115707.234375, pitch = -3202.417480,roll = -3103.919189, spin = 20.552950
+Computed new angular velocities:
+	pitch_vel = 50238.925781, roll velocity = 48693.703125
+Disc velocity pre update: (498.667999, 165.477264, 951.635193)
+Disc position pre update: (10.000000, 10.000000, 1.500000)
+Disc velocity post update: (-1768990.875000, -587019.375000, 482122.093750)
+Disc position post update: (-3536969.500000, -1173696.125000, 966111.125000)
+Finding d1: 
+	velocity = (-1768990.875000,-587019.375000,482122.093750), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (-0.949108,-0.314951,0.000000)
+Calculated forces on disc from: 
+	vel = (-1768990.875000, -587019.375000, 482122.093750),
+	roll = 48693.703125, pitch = 50238.925781, spin = -54.250000 and alpha = -0.253123.
+Returned values are: 
+	lift = -71361191936.000000, drag = 22561914880.000000, pitch = 24580223664128.000000,roll = -22129821089792.000000, spin = 64465708.000000
+Computed new angular velocities:
+	pitch_vel = -385609948463104.000000, roll velocity = 347168481214464.000000
+Disc velocity pre update: (-1768990.875000, -587019.375000, 482122.093750)
+Disc position pre update: (10.000000, 10.000000, 1.500000)
+Disc velocity post update: (430772224000.000000, 142946828288.000000, -724995473408.000000)
+Disc position post update: (861540909056.000000, 285892476928.000000, -1449990029312.000000)
+Finding d1: 
+	velocity = (430772224000.000000,142946828288.000000,-724995473408.000000), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (0.949108,0.314951,0.000000)
+Calculated forces on disc from: 
+	vel = (430772224000.000000, 142946828288.000000, -724995473408.000000),
+	roll = 347168481214464.000000, pitch = -385609948463104.000000, spin = -54.250000 and alpha = 1.011455.
+Returned values are: 
+	lift = 81913604728837955000000.000000, drag = 83271899383652151000000.000000, pitch = -37244512993255158000000000000000000.000000,roll = -31136489604740228000000000000000000.000000, spin = 12725202222112047000.000000
+Computed new angular velocities:
+	pitch_vel = 584284960060057900000000000000000000.000000, roll velocity = 488463409645131060000000000000000000.000000
+Disc velocity pre update: (430772224000.000000, 142946828288.000000, -724995473408.000000)
+Disc position pre update: (10.000000, 10.000000, 1.500000)
+Disc velocity post update: (273820046294427780000000.000000, 90864049621074824000000.000000, 1303397937084371100000000.000000)
+Disc position post update: (547640092588855570000000.000000, 181728099242149650000000.000000, 2606795874168742300000000.000000)
+Finding d1: 
+	velocity = (273820046294427780000000.000000,90864049621074824000000.000000,1303397937084371100000000.000000), 
+	d3 = (0.000000,0.000000,1.000000) => 
+	d1 = (0.000000,0.000000,0.000000)

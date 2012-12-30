@@ -8,6 +8,8 @@
 #ifndef GL_WINDOW_HANDLER_H_
 #define GL_WINDOW_HANDLER_H_
 
+#include "screen.h"
+
 /*
  * Return codes for init_gl.
  *

@@ -51,7 +51,7 @@ struct match_stats;
 typedef struct match_state
 {
   struct pitch *pitch;
-  struct disc_throw *throw;
+  struct disc_throw *match_throw;
   struct disc *disc;
   struct disc_path *disc_path;
   struct team *teams[2];
@@ -66,6 +66,7 @@ typedef struct match_state
 
 MATCH_STATE *create_match_state(unsigned int,
                                 unsigned int,
+                                char *,
                                 char *,
                                 char *,
                                 char *,

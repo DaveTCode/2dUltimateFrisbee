@@ -11,6 +11,7 @@
 #ifndef EVENT_QUEUE_H_
 #define EVENT_QUEUE_H_
 
+#include <stdbool.h>
 #include "SDL/SDL.h"
 
 struct automaton_event;

@@ -37,7 +37,7 @@ typedef struct screen
   float centre_y;
 } SCREEN;
 
-SCREEN *create_screen();
-void destroy_screen(SCREEN *);
+struct screen *create_screen();
+void destroy_screen(struct screen *);
 
 #endif /* SCREEN_H_ */

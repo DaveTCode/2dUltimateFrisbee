@@ -8,6 +8,7 @@
 #ifndef AUTOMATON_TIMED_EVENT_QUEUE_H_
 #define AUTOMATON_TIMED_EVENT_QUEUE_H_
 
+#include <stdbool.h>
 #include "SDL/SDL_stdinc.h"
 
 struct match_state;

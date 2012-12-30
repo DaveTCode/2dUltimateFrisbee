@@ -7,6 +7,8 @@
 
 #include "../dt_logger.h"
 
+#include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include "config_map.h"
 #include "strmap/StrMap.h"

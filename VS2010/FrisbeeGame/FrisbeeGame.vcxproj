@@ -127,6 +127,9 @@
     <ClInclude Include="..\..\src\timer.h" />
     <ClInclude Include="..\..\src\window_handler.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -162,15 +165,19 @@
     <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
     <OutDir>$(ProjectDir)..\..\</OutDir>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PreBuildEventUseInBuild />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\..\dep\include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <LibraryPath>$(ProjectDir)..\..\dep\lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <ExcludePath>$(ProjectDir)..\..\data_structures\strmap;$(ProjectDir)..\..\ezxml;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;$(MSBuildToolsPath32);$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib;</ExcludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
@@ -179,18 +186,21 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL.lib;$(ProjectDir)..\..\dep\lib\SDL\SDLmain.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_image.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_ttf.lib;$(ProjectDir)..\..\dep\lib\ogg\libogg.lib;$(ProjectDir)..\..\dep\lib\vorbis\libvorbis.lib;$(ProjectDir)..\..\dep\lib\AL\OpenAL32.lib;$(ProjectDir)..\..\dep\lib\lua5.1\lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;$(ProjectDir)..\..\dep\lib\SDL\SDLmain.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_image.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_ttf.lib;$(ProjectDir)..\..\dep\lib\ogg\libogg.lib;$(ProjectDir)..\..\dep\lib\vorbis\libvorbis.lib;$(ProjectDir)..\..\dep\lib\AL\OpenAL32.lib;$(ProjectDir)..\..\dep\lib\lua5.1\lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>library;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <CustomBuildStep>
-      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+      <Command>
+      </Command>
     </CustomBuildStep>
     <PreBuildEvent>
-      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create prototypes.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -219,10 +229,12 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);sdl.lib;sdlmain.lib;libogg.lib;libvorbis.lib;OpenAL32.lib;opengl32.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Create prototypes.h</Message>
+      <Message>
+      </Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

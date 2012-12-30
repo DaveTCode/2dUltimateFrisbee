@@ -11,6 +11,7 @@
 #ifndef INPUT_HANDLER_H_
 #define INPUT_HANDLER_H_
 
+#include <stdbool.h>
 #include "SDL/SDL_events.h"
 
 struct match_state;

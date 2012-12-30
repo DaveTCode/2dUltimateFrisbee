@@ -11,8 +11,10 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL/SDL_ttf.h>
 #include "window_handler.h"
 #include "screen.h"
+#include "data_structures/vector.h"
 
 /*
  * init_window_system

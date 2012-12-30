@@ -24,8 +24,9 @@
 
 #include <SDL/SDL_opengl.h>
 #include "camera_handler.h"
-#include "screen.h"
+#include "input_handler.h"
 #include "match_state.h"
+#include "screen.h"
 
 /*
  * reset_camera_handler

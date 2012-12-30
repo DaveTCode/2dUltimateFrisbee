@@ -10,6 +10,8 @@
 #ifndef MATCH_CREATION_H_
 #define MATCH_CREATION_H_
 
+#include "match_state.h"
+
 void start_match(MATCH_STATE *);
 
 #endif /* MATCH_CREATION_H_ */

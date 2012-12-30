@@ -10,7 +10,7 @@
 #include <AL/al.h>
 #include <AL/alc.h>
 #include "audio_general.h"
-#include <strmap\strmap.h>
+#include "strmap\strmap.h"
 
 /*
  * audio_system_error
@@ -44,8 +44,6 @@ char *audio_system_error(ALCdevice *device)
     default:
       return("OpenAL error check: Unknown error");
   }
-
-  return("");
 }
 
 /*

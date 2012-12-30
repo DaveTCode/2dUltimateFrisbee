@@ -8,11 +8,14 @@
 #ifndef DRAW_FUNCTIONS_H_
 #define DRAW_FUNCTIONS_H_
 
+#include "font_structures.h"
+
 struct disc;
 struct player;
 struct screen;
 struct animation_handler;
 struct pitch;
+struct font;
 
 /*
  * These are used as indices into color arrays so must be kept as they are.
@@ -39,6 +42,6 @@ void draw_disc(struct disc *, float);
 void draw_player(struct player *, struct animation_handler *);
 void draw_pitch_background(struct screen *, struct pitch *);
 void draw_pitch_lines(struct screen *, struct pitch *);
-
+void draw_text(char *, int, int, struct font *);
 
 #endif /* DRAW_FUNCTIONS_H_ */

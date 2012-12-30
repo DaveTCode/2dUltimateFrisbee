@@ -12,6 +12,49 @@
 #include "../automaton/data_structures/automaton_event.h"
 
 /*
+ * destroy_event_queue_node
+ *
+ * Frees the memory used by the passed in object.
+ *
+ * Parameters: event_queue_node - The object to be freed.
+ */
+void destroy_event_queue_node(EVENT_QUEUE_NODE *event_queue_node)
+{
+  /*
+   * Free the object.
+   */
+  DT_FREE(event_queue_node);
+}
+
+/*
+ * create_event_queue_node
+ *
+ * Allocates the memory required for a event_queue_node.
+ *
+ * Returns: A pointer to the newly created memory
+ */
+EVENT_QUEUE_NODE *create_event_queue_node()
+{
+  /*
+   * Local Variables.
+   */
+  EVENT_QUEUE_NODE *node;
+
+  /*
+   * Allocate the memory required for the new node.
+   */
+  node = (EVENT_QUEUE_NODE *) DT_MALLOC(sizeof(EVENT_QUEUE_NODE));
+
+  /*
+   * Default the pointers to NULL so that we can test against them if required.
+   */
+  node->next = NULL;
+  node->prev = NULL;
+
+  return(node);
+}
+
+/*
  * create_event_queue
  *
  * Allocates the memory required for a event_queue. Also sets the default NULL
@@ -72,50 +115,6 @@ void destroy_event_queue(EVENT_QUEUE *event_queue)
    * Free the object.
    */
   DT_FREE(event_queue);
-}
-
-/*
- * create_event_queue_node
- *
- * Allocates the memory required for a event_queue_node.
- *
- * Returns: A pointer to the newly created memory
- */
-EVENT_QUEUE_NODE *create_event_queue_node()
-{
-  /*
-   * Local Variables.
-   */
-  EVENT_QUEUE_NODE *node;
-
-  /*
-   * Allocate the memory required for the new node.
-   */
-  node = (EVENT_QUEUE_NODE *) DT_MALLOC(sizeof(EVENT_QUEUE_NODE));
-
-  /*
-   * Default the pointers to NULL so that we can test against them if required.
-   */
-  node->next = NULL;
-  node->prev = NULL;
-
-  return(node);
-
-}
-
-/*
- * destroy_event_queue_node
- *
- * Frees the memory used by the passed in object.
- *
- * Parameters: event_queue_node - The object to be freed.
- */
-void destroy_event_queue_node(EVENT_QUEUE_NODE *event_queue_node)
-{
-  /*
-   * Free the object.
-   */
-  DT_FREE(event_queue_node);
 }
 
 /*

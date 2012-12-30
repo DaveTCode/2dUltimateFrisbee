@@ -6,6 +6,7 @@
  */
 #include "../../dt_logger.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include "automaton_csv_file_loader.h"

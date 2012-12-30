@@ -1,0 +1,5 @@
+set_player_desired_pos
+test_callback
+get_current_position
+stop_running
+is_attacking_left_to_right

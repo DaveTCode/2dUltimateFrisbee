@@ -1,0 +1,101 @@
+(0:0) Event event_pull_thrown placed on queue
+(1:0) Event event_pull_thrown placed on queue
+(0:1) Event event_pull_thrown placed on queue
+(1:1) Event event_pull_thrown placed on queue
+(0:2) Event event_pull_thrown placed on queue
+(1:2) Event event_pull_thrown placed on queue
+(0:3) Event event_pull_thrown placed on queue
+(1:3) Event event_pull_thrown placed on queue
+(0:4) Event event_pull_thrown placed on queue
+(1:4) Event event_pull_thrown placed on queue
+(0:5) Event event_pull_thrown placed on queue
+(1:5) Event event_pull_thrown placed on queue
+(0:6) Event event_pull_thrown placed on queue
+(1:6) Event event_pull_thrown placed on queue
+(0:0) Finding next state/transition/automaton from transition AmICatchingPull
+(0:0) Lua function process_AmICatchingPull returned 0
+(0:0) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:0) Finding next state/transition/automaton from transition DecideOnPosition
+(0:0) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:0) callback_set_player_desired_pos called with x=22.000000,y=10.000000
+(0:0) callback_set_player_speed called with 50.000000%
+(0:0) Lua function process_DecideOnPosition returned 1
+(0:0) Moving to true state state_running
+(0:0) Entering state running
+(0:1) Finding next state/transition/automaton from transition AmICatchingPull
+(0:1) Lua function process_AmICatchingPull returned 1
+(0:1) Moving from transition AmICatchingPull to true transition IsPullCatchable
+(0:1) Finding next state/transition/automaton from transition IsPullCatchable
+(0:1) Lua function process_IsPullCatchable returned 1
+(0:1) Moving to true state state_intercept_disc
+(0:2) Finding next state/transition/automaton from transition AmICatchingPull
+(0:2) Lua function process_AmICatchingPull returned 0
+(0:2) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:2) Finding next state/transition/automaton from transition DecideOnPosition
+(0:2) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:2) callback_set_player_desired_pos called with x=24.000000,y=10.000000
+(0:2) callback_set_player_speed called with 50.000000%
+(0:2) Lua function process_DecideOnPosition returned 1
+(0:2) Moving to true state state_running
+(0:2) Entering state running
+(0:3) Finding next state/transition/automaton from transition AmICatchingPull
+(0:3) Lua function process_AmICatchingPull returned 0
+(0:3) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:3) Finding next state/transition/automaton from transition DecideOnPosition
+(0:3) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:3) callback_set_player_desired_pos called with x=26.000000,y=10.000000
+(0:3) callback_set_player_speed called with 50.000000%
+(0:3) Lua function process_DecideOnPosition returned 1
+(0:3) Moving to true state state_running
+(0:3) Entering state running
+(0:4) Finding next state/transition/automaton from transition AmICatchingPull
+(0:4) Lua function process_AmICatchingPull returned 0
+(0:4) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:4) Finding next state/transition/automaton from transition DecideOnPosition
+(0:4) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:4) callback_set_player_desired_pos called with x=28.000000,y=10.000000
+(0:4) callback_set_player_speed called with 50.000000%
+(0:4) Lua function process_DecideOnPosition returned 1
+(0:4) Moving to true state state_running
+(0:4) Entering state running
+(0:5) Finding next state/transition/automaton from transition AmICatchingPull
+(0:5) Lua function process_AmICatchingPull returned 0
+(0:5) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:5) Finding next state/transition/automaton from transition DecideOnPosition
+(0:5) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:5) callback_set_player_desired_pos called with x=30.000000,y=10.000000
+(0:5) callback_set_player_speed called with 50.000000%
+(0:5) Lua function process_DecideOnPosition returned 1
+(0:5) Moving to true state state_running
+(0:5) Entering state running
+(0:6) Finding next state/transition/automaton from transition AmICatchingPull
+(0:6) Lua function process_AmICatchingPull returned 0
+(0:6) Moving from transition AmICatchingPull to false transition DecideOnPosition
+(0:6) Finding next state/transition/automaton from transition DecideOnPosition
+(0:6) callback_get_disc_final_pos called. Returned (10.000000, 10.000000)
+(0:6) callback_set_player_desired_pos called with x=32.000000,y=10.000000
+(0:6) callback_set_player_speed called with 50.000000%
+(0:6) Lua function process_DecideOnPosition returned 1
+(0:6) Moving to true state state_running
+(0:6) Entering state running
+(0:0) Event event_arrived_at_location placed on queue
+(0:0) Exiting state running
+(0:0) Finding next state/transition/automaton from transition SwitchToVerticalStack
+(0:0) Lua function process_SwitchToVerticalStack returned 1
+(0:0) Moving to new automaton (vertical_stack_automaton)
+(0:0) Moving to true state state_waiting
+(0:0) Entering state waiting.
+(0:2) Event event_arrived_at_location placed on queue
+(0:2) Exiting state running
+(0:2) Finding next state/transition/automaton from transition SwitchToVerticalStack
+(0:2) Lua function process_SwitchToVerticalStack returned 1
+(0:2) Moving to new automaton (vertical_stack_automaton)
+(0:2) Moving to true state state_waiting
+(0:2) Entering state waiting.
+(0:3) Event event_arrived_at_location placed on queue
+(0:3) Exiting state running
+(0:3) Finding next state/transition/automaton from transition SwitchToVerticalStack
+(0:3) Lua function process_SwitchToVerticalStack returned 1
+(0:3) Moving to new automaton (vertical_stack_automaton)
+(0:3) Moving to true state state_waiting
+(0:3) Entering state waiting.

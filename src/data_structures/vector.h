@@ -7,6 +7,8 @@
 #ifndef VECTOR_H_
 #define VECTOR_H_
 
+#include <stdbool.h>
+
 /*
  * Simple 3 dimensional vector construct. Used in positions, velocities and
  * accelerations throughout the game.

@@ -71,5 +71,10 @@ struct automaton_set;
 int parse_single_automaton(ezxml_t,
                            struct automaton *,
                            struct automaton_set *, char *, char *);
+int parse_automaton_set_xml_file(char *,
+                                 struct automaton_set *,
+                                 int(*)(struct automaton_state ***, int),
+                                 int(*)(struct automaton_event ***),
+                                 struct match_state *);
 
 #endif /* AUTOMATON_TRANSITION_FILE_LOADER_H_ */

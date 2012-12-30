@@ -214,7 +214,7 @@ AUTOMATON *get_automaton_by_name(AUTOMATON_SET *set, char *name)
    * Local Variables.
    */
   int ii;
-  AUTOMATON found_automaton = NULL;
+  AUTOMATON *found_automaton = NULL;
 
   /*
    * Loop through the automaton array until we run out or find the automaton

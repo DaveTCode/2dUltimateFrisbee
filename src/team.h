@@ -8,7 +8,7 @@
 #ifndef TEAM_H_
 #define TEAM_H_
 
-
+#include <stdbool.h>
 
 struct player;
 

@@ -8,6 +8,7 @@
 #ifndef THROW_H_
 #define THROW_H_
 
+#include <stdbool.h>
 #include "data_structures/vector.h"
 
 struct mouse_state;

@@ -40,7 +40,7 @@ AUTOMATON_STATE *get_state_from_transition(AUTOMATON *automaton,
   /*
    * Local Variables.
    */
-  AUTOMATON_STATE *new_state;
+  AUTOMATON_STATE *new_state = NULL;
   AUTOMATON *new_automaton = automaton;
   int rc;
 
