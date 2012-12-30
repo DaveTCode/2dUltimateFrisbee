@@ -1,0 +1,4 @@
+, event_pull_thrown, event_pull_dropped, event_pull_caught, event_disc_picked_up, event_arrived_at_location, event_disc_hit_floor, event_disc_released, event_disc_caught
+state_running,,,,,,,,SwitchToVertStack
+state_intercept_disc,,,,,,,,SwitchToVertStack
+state_follow_player,,,,,,,,SwitchToVertStack

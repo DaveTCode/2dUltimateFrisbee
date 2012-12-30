@@ -1,0 +1,7 @@
+pull_thrown
+pull_droppped
+pull_caught
+disc_picked_up
+arrived_at_location
+disc_hit_floordisc_released
+disc_caught

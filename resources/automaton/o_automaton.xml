@@ -1,0 +1,177 @@
+<automaton_set>
+    <start_automaton>pull_automaton</start_automaton>
+    <automaton name="pull_automaton">
+        <csv_file>resources\\automaton\\o_pull_automaton.csv</csv_file>
+        <lua_file>resources\\automaton\\o_pull_automaton_scripts.lua</lua_file>
+        <start_state>state_waiting</start_state>
+        <transition name="AmICatchingPull">
+            <true>
+                <transition>IsPullCatchable</transition>
+            </true> 
+            <false>
+                <transition>DecideOnPosition</transition>
+            </false>
+            <lua_function_name>process_AmICatchingPull</lua_function_name>
+        </transition>
+        <transition name="IsPullCatchable">
+            <true>
+                <state>state_intercept_disc</state>
+            </true>
+            <false>
+                <transition>IsDiscLandingOutOfBounds</transition>
+            </false>
+            <lua_function_name>process_IsPullCatchable</lua_function_name>
+        </transition>
+        <transition name="IsDiscLandingOutOfBounds">
+            <true>
+                <transition>DecideStartFromBrick</transition>
+            </true>
+            <false>
+                <state>state_picking_up_disc</state>
+            </false>
+            <lua_function_name>process_IsDiscLandingOutOfBounds</lua_function_name>
+        </transition>
+        <transition name="DecideOnPosition">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <state>state_running</state>
+            </false>
+            <lua_function_name>process_DecideOnPosition</lua_function_name>
+        </transition>
+        <transition name="DecideStartFromBrick">
+            <true>
+                <state>state_move_disc_to_brick</state>
+            </true>
+            <false>
+                <state>state_move_disc_to_sideline</state>
+            </false>
+            <lua_function_name>process_DecideStartFromBrick</lua_function_name>
+        </transition>
+        <transition name="SwitchToVerticalStack">
+            <true>
+                <automaton>vertical_stack_automaton</automaton>
+                <state>state_waiting</state>
+            </true>
+            <false>
+                <automaton>vertical_stack_automaton</automaton>
+                <state>state_waiting</state>
+            </false>
+            <lua_function_name>process_SwitchToVerticalStack</lua_function_name>
+        </transition>
+    </automaton>
+    <automaton name="vertical_stack_automaton">
+        <csv_file>resources\\automaton\\o_vertical_stack_automaton.csv</csv_file>
+        <lua_file>resources\\automaton\\o_vertical_stack_automaton_scripts.lua</lua_file>
+        <start_state>state_waiting</start_state>
+        <transition name="DecideWhereToWait">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <state>state_running</state>
+            </false>
+            <lua_function_name>process_DecideWhereToWait</lua_function_name>
+        </transition>
+        <transition name="AmIInStack">
+            <true>
+                <state>state_waiting</state>
+            </true>
+            <false>
+                <transition>ShouldIClear</transition>
+            </false>
+            <lua_function_name>process_AmIInStack</lua_function_name>
+        </transition>
+        <transition name="ShouldICut">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <state>state_waiting</state>
+            </false>
+            <lua_function_name>process_ShouldICut</lua_function_name>
+        </transition>
+        <transition name="ShouldIClear">
+            <true>
+                <transition>DecideWhereToWait</transition>
+            </true>
+            <false>
+                <transition>ShouldICut</transition>
+            </false>
+            <lua_function_name>process_ShouldIClear</lua_function_name>
+        </transition>
+        <transition name="ChangeCut">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <state>state_running</state>
+            </false>
+            <lua_function_name>process_ChangeCut</lua_function_name>
+        </transition>
+        <transition name="MoveToDiscUpAutomaton">
+            <true>
+                <automaton>disc_in_air_automaton</automaton>
+                <transition>ShouldIChase</transition>
+            </true>
+            <false>
+                <automaton>disc_in_air_automaton</automaton>
+                <transition>ShouldIChase</transition>
+            </false>
+            <lua_function_name>process_ShouldIChase</lua_function_name>
+        </transition>
+    </automaton>
+    <automaton name="disc_in_air_automaton">
+        <csv_file>resources\\automaton\\o_disc_in_air_automaton.csv</csv_file>
+        <lua_file>resources\\automaton\\o_disc_in_air_automaton_scripts.lua</lua_file>
+        <start_state>state_waiting</start_state>
+        <transition name="ShouldIChase">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <transition>DecideWhereToWait</transition>
+            </false>
+            <lua_function_name>process_ShouldIChase</lua_function_name>
+        </transition>
+        <transition name="DecideWhereToWait">
+            <true>
+                <state>state_running</state>
+            </true>
+            <false>
+                <state>state_running</state>
+            </false>
+            <lua_function_name>process_DecideWhereToWait</lua_function_name>
+        </transition>
+        <transition name="WillWeCatch">
+            <true>
+                <transition>DecideWhereToWait</transition>
+            </true>
+            <false>
+                <transition>DecideWhoToMark</transition>
+            </false>
+            <lua_function_name>process_WillWeCatch</lua_function_name>
+        </transition>
+        <transition name="DecideWhoToMark">
+            <true>
+                <state>state_follow_player</state>
+            </true>
+            <false>
+                <state>state_follow_player</state>
+            </false>
+            <lua_function_name>process_DecideWhoToMark</lua_function_name>
+        </transition>
+        <transition name="SwitchToVertStack">
+            <true>
+                <automaton>vertical_stack_automaton</automaton>
+                <transition>AmIInStack</transition>
+            </true>
+            <false>
+                <automaton>vertical_stack_automaton</automaton>
+                <transition>AmIInStack</transition>
+            </false>
+            <lua_function_name>process_SwitchToVertStack</lua_function_name>
+        </transition>
+    </automaton>
+</automaton_set>

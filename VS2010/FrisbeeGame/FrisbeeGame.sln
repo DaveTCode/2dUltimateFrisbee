@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrisbeeGame", "FrisbeeGame.vcxproj", "{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{896FA119-F78F-4A2E-AB39-D7AB17D97021}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}.Debug|Win32.Build.0 = Debug|Win32
+		{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}.Release|Win32.ActiveCfg = Release|Win32
+		{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

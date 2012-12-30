@@ -1,0 +1,7 @@
+waiting
+catching_pull
+picking_up_disc
+move_disc_to_brick
+move_disc_to_sideline
+running
+intercept_discfollow_player

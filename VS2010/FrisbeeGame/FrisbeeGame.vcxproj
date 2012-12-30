@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\ai_general\ai_event_handler.c" />
+    <ClCompile Include="..\..\src\ai_general\player_ai.c" />
+    <ClCompile Include="..\..\src\animation\animation.c" />
+    <ClCompile Include="..\..\src\animation\animation_handler.c" />
+    <ClCompile Include="..\..\src\audio\audio_general.c">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_DEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="..\..\src\automaton\data_structures\automaton.c" />
+    <ClCompile Include="..\..\src\automaton\data_structures\automaton_event.c" />
+    <ClCompile Include="..\..\src\automaton\data_structures\automaton_state.c" />
+    <ClCompile Include="..\..\src\automaton\data_structures\automaton_timed_event_queue.c" />
+    <ClCompile Include="..\..\src\automaton\data_structures\automaton_transition.c" />
+    <ClCompile Include="..\..\src\automaton\file_handling\automaton_csv_file_gen.c" />
+    <ClCompile Include="..\..\src\automaton\file_handling\automaton_csv_file_loader.c" />
+    <ClCompile Include="..\..\src\automaton\file_handling\automaton_file_output.c" />
+    <ClCompile Include="..\..\src\automaton\file_handling\automaton_transition_file_loader.c" />
+    <ClCompile Include="..\..\src\automaton\processing\automaton_general.c" />
+    <ClCompile Include="..\..\src\automaton_handler.c" />
+    <ClCompile Include="..\..\src\auto_camera_movement.c" />
+    <ClCompile Include="..\..\src\camera_handler.c" />
+    <ClCompile Include="..\..\src\collisions\collision_handler.c" />
+    <ClCompile Include="..\..\src\collisions\intercept.c" />
+    <ClCompile Include="..\..\src\config_file\config_loader.c" />
+    <ClCompile Include="..\..\src\config_file\config_map.c" />
+    <ClCompile Include="..\..\src\data_structures\event_queue.c" />
+    <ClCompile Include="..\..\src\data_structures\vector.c" />
+    <ClCompile Include="..\..\src\disc.c" />
+    <ClCompile Include="..\..\src\disc_path.c" />
+    <ClCompile Include="..\..\src\dt_logger.c" />
+    <ClCompile Include="..\..\src\entity_graphic.c" />
+    <ClCompile Include="..\..\src\flight_condition_lu_table.c" />
+    <ClCompile Include="..\..\src\flight_mechanics\disc_flight.c" />
+    <ClCompile Include="..\..\src\flight_mechanics\disc_forces.c" />
+    <ClCompile Include="..\..\src\game_functions.c" />
+    <ClCompile Include="..\..\src\gl_window_handler.c" />
+    <ClCompile Include="..\..\src\impl_automatons\generic_o_d_files\init_automaton_events.c" />
+    <ClCompile Include="..\..\src\impl_automatons\lua_callbacks\lua_call_back_functions.c" />
+    <ClCompile Include="..\..\src\impl_automatons\o_automaton\o_automaton_states.c" />
+    <ClCompile Include="..\..\src\impl_automatons\o_automaton\o_automaton_state_funcs.c" />
+    <ClCompile Include="..\..\src\input_handler.c" />
+    <ClCompile Include="..\..\src\main.c" />
+    <ClCompile Include="..\..\src\match_creation.c" />
+    <ClCompile Include="..\..\src\match_state.c" />
+    <ClCompile Include="..\..\src\match_stats.c" />
+    <ClCompile Include="..\..\src\mem_alloc_handler.c" />
+    <ClCompile Include="..\..\src\mouse_click_state.c" />
+    <ClCompile Include="..\..\src\physics.c" />
+    <ClCompile Include="..\..\src\pitch.c" />
+    <ClCompile Include="..\..\src\player.c" />
+    <ClCompile Include="..\..\src\rendering\draw_functions.c" />
+    <ClCompile Include="..\..\src\rendering\font_loader.c" />
+    <ClCompile Include="..\..\src\rendering\texture_loader.c" />
+    <ClCompile Include="..\..\src\screen.c" />
+    <ClCompile Include="..\..\src\team.c" />
+    <ClCompile Include="..\..\src\throw.c" />
+    <ClCompile Include="..\..\src\throw_init_condition.c" />
+    <ClCompile Include="..\..\src\timer.c" />
+    <ClCompile Include="..\..\src\window_handler.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\animation\animation.h" />
+    <ClInclude Include="..\..\src\animation\animation_handler.h" />
+    <ClInclude Include="..\..\src\audio\audio_general.h" />
+    <ClInclude Include="..\..\src\automaton\data_structures\automaton.h" />
+    <ClInclude Include="..\..\src\automaton\data_structures\automaton_event.h" />
+    <ClInclude Include="..\..\src\automaton\data_structures\automaton_state.h" />
+    <ClInclude Include="..\..\src\automaton\data_structures\automaton_timed_event_queue.h" />
+    <ClInclude Include="..\..\src\automaton\data_structures\automaton_transition.h" />
+    <ClInclude Include="..\..\src\automaton\file_handling\automaton_csv_file_gen.h" />
+    <ClInclude Include="..\..\src\automaton\file_handling\automaton_csv_file_loader.h" />
+    <ClInclude Include="..\..\src\automaton\file_handling\automaton_file_output.h" />
+    <ClInclude Include="..\..\src\automaton\file_handling\automaton_transition_file_loader.h" />
+    <ClInclude Include="..\..\src\automaton\processing\automaton_general.h" />
+    <ClInclude Include="..\..\src\automaton_handler.h" />
+    <ClInclude Include="..\..\src\camera_handler.h" />
+    <ClInclude Include="..\..\src\collisions\collision_handler.h" />
+    <ClInclude Include="..\..\src\collisions\intercept.h" />
+    <ClInclude Include="..\..\src\config_file\config_loader.h" />
+    <ClInclude Include="..\..\src\config_file\config_map.h" />
+    <ClInclude Include="..\..\src\conversion_constants.h" />
+    <ClInclude Include="..\..\src\data_structures\event_queue.h" />
+    <ClInclude Include="..\..\src\data_structures\vector.h" />
+    <ClInclude Include="..\..\src\disc.h" />
+    <ClInclude Include="..\..\src\disc_path.h" />
+    <ClInclude Include="..\..\src\dt_logger.h" />
+    <ClInclude Include="..\..\src\dt_macros.h" />
+    <ClInclude Include="..\..\src\entity_graphic.h" />
+    <ClInclude Include="..\..\src\error_handler.h" />
+    <ClInclude Include="..\..\src\flight_condition_lu_table.h" />
+    <ClInclude Include="..\..\src\flight_mechanics\disc_dimensions.h" />
+    <ClInclude Include="..\..\src\flight_mechanics\disc_flight_constants.h" />
+    <ClInclude Include="..\..\src\flight_mechanics\disc_forces.h" />
+    <ClInclude Include="..\..\src\gl_window_handler.h" />
+    <ClInclude Include="..\..\src\impl_automatons\generic_o_d_files\event_names.h" />
+    <ClInclude Include="..\..\src\impl_automatons\lua_callbacks\lua_callback_globals.h" />
+    <ClInclude Include="..\..\src\impl_automatons\o_automaton\o_automaton_states.h" />
+    <ClInclude Include="..\..\src\input_handler.h" />
+    <ClInclude Include="..\..\src\match_state.h" />
+    <ClInclude Include="..\..\src\match_stats.h" />
+    <ClInclude Include="..\..\src\math_constants.h" />
+    <ClInclude Include="..\..\src\mouse_click_state.h" />
+    <ClInclude Include="..\..\src\physics.h" />
+    <ClInclude Include="..\..\src\pitch.h" />
+    <ClInclude Include="..\..\src\player.h" />
+    <ClInclude Include="..\..\src\rendering\draw_functions.h" />
+    <ClInclude Include="..\..\src\rendering\font_loader.h" />
+    <ClInclude Include="..\..\src\rendering\font_structures.h" />
+    <ClInclude Include="..\..\src\rendering\texture_loader.h" />
+    <ClInclude Include="..\..\src\screen.h" />
+    <ClInclude Include="..\..\src\team.h" />
+    <ClInclude Include="..\..\src\throw.h" />
+    <ClInclude Include="..\..\src\throw_constants.h" />
+    <ClInclude Include="..\..\src\throw_init_condition.h" />
+    <ClInclude Include="..\..\src\timer.h" />
+    <ClInclude Include="..\..\src\window_handler.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ACA03E40-13E1-40DF-9E60-C91E1BF3D4BA}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>FrisbeeGame</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\..\dep\include;C:\Program Files %28x86%29\Visual Leak Detector\include;$(IncludePath)</IncludePath>
+    <ExcludePath>$(ProjectDir)..\..\data_structures\strmap;$(ProjectDir)..\..\ezxml;$(ExcludePath)</ExcludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Visual Leak Detector\lib;$(ProjectDir)..\..\dep\lib;$(LibraryPath)</LibraryPath>
+    <CustomBuildBeforeTargets>Build</CustomBuildBeforeTargets>
+    <OutDir>$(ProjectDir)..\..\</OutDir>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opengl32.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL.lib;$(ProjectDir)..\..\dep\lib\SDL\SDLmain.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_image.lib;$(ProjectDir)..\..\dep\lib\SDL\SDL_ttf.lib;$(ProjectDir)..\..\dep\lib\ogg\libogg.lib;$(ProjectDir)..\..\dep\lib\vorbis\libvorbis.lib;$(ProjectDir)..\..\dep\lib\AL\OpenAL32.lib;$(ProjectDir)..\..\dep\lib\lua5.1\lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>library;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <CustomBuildStep>
+      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create prototypes.h</Message>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);sdl.lib;sdlmain.lib;libogg.lib;libvorbis.lib;OpenAL32.lib;opengl32.lib</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>python $(ProjectDir)..\..\Tools\parse_prototypes.py</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Create prototypes.h</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

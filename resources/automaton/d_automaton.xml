@@ -1,0 +1,8 @@
+<automaton_set>
+    <start_automaton>do_nothing_automaton</start_automaton>
+    <automaton name="do_nothing_automaton">
+        <csv_file>resources\\automaton\\empty.csv</csv_file>
+        <lua_file>resources\\automaton\\empty.lua</lua_file>
+        <start_state>state_waiting</start_state>
+    </automaton>
+</automaton_set>
