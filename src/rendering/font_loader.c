@@ -27,7 +27,7 @@ int create_font(char *filename,
   SDL_Surface* character_surface;
   int ret_code = BUILD_FONT_OK;
   int rc;
-  int ii;
+  Uint16 ii;
 
   /*
    * Allocate the memory required for the font object.

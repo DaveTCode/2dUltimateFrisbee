@@ -16,26 +16,26 @@
 
 DISC_THROW *create_throw()
 {
-  DISC_THROW *throw;
+  DISC_THROW *disc_throw;
 
   /*
    * Create the memory required for the the throw object.
    */
-  throw = (DISC_THROW *) DT_MALLOC(sizeof(DISC_THROW));
+  disc_throw = (DISC_THROW *) DT_MALLOC(sizeof(DISC_THROW));
 
   /*
    * Create the memory required for each of the mouse state_objects related to
    * this throw.
    */
-  throw->start_state = create_mouse_state();
-  throw->end_state = create_mouse_state();
+  disc_throw->start_state = create_mouse_state();
+  disc_throw->end_state = create_mouse_state();
 
   /*
    * Throw defaults to NOT being in progress.
    */
-  throw->in_progress = false;
+  disc_throw->in_progress = false;
 
-  return(throw);
+  return(disc_throw);
 }
 
 /*
@@ -45,18 +45,18 @@ DISC_THROW *create_throw()
  *
  * Parameters: throw - The object to be freed.
  */
-void destroy_throw(DISC_THROW *throw)
+void destroy_throw(DISC_THROW *disc_throw)
 {
   /*
    * First free the mouse states associated with this object.
    */
-  destroy_mouse_state(throw->start_state);
-  destroy_mouse_state(throw->end_state);
+  destroy_mouse_state(disc_throw->start_state);
+  destroy_mouse_state(disc_throw->end_state);
 
   /*
    * Free the throw object itself.
    */
-  DT_FREE(throw);
+  DT_FREE(disc_throw);
 }
 
 /*
@@ -68,15 +68,15 @@ void destroy_throw(DISC_THROW *throw)
  * This is one of the drop in conversion routines that can easily be replaced
  * in order to change the way user input affects a throw.
  */
-VECTOR3 convert_throw_to_velocity(DISC *disc, DISC_THROW *throw)
+VECTOR3 convert_throw_to_velocity(DISC *disc, DISC_THROW *disc_throw)
 {
   /*
    * Local Variables.
    */
-  float x_diff = ((float) throw->start_state->world_x) - disc->position.x;
-  float y_diff = ((float) throw->start_state->world_y) - disc->position.y;
-  float time_diff = (float) (throw->end_state->create_time -
-                             throw->start_state->create_time);
+  float x_diff = ((float) disc_throw->start_state->world_x) - disc->position.x;
+  float y_diff = ((float) disc_throw->start_state->world_y) - disc->position.y;
+  float time_diff = (float) (disc_throw->end_state->create_time -
+                             disc_throw->start_state->create_time);
   float adj_time_diff;
   float total_speed;
   float xy_ratio;

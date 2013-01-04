@@ -8,6 +8,7 @@
 #ifndef PHYSICS_H_
 #define PHYSICS_H_
 
+#include <stdbool.h>
 #include "SDL/SDL_stdinc.h"
 
 struct vector3;
@@ -31,5 +32,6 @@ struct vector3 calc_velocity_towards_position(struct vector3 *,
                                               struct vector3 *,
                                               float,
                                               float);
+void calculate_disc_position(struct disc *, float, bool);
 
 #endif /* PHYSICS_H_ */

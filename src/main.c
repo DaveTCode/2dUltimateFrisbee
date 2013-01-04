@@ -371,6 +371,7 @@ int main(int argc, char** argv)
   {
     game_exit("Programmer error: D XML file not handled in cfg.");
   }
+  DT_DEBUG_LOG("Config file loaded\n");
 
   /*
    * Create the screen object and use it to initialise the window system.
@@ -381,6 +382,7 @@ int main(int argc, char** argv)
   {
     game_exit("Window system could not be initialised.");
   }
+  DT_DEBUG_LOG("Graphics subsystem created and initialized\n");
 
   /*
    * Initialise Audio subsystem
@@ -388,7 +390,15 @@ int main(int argc, char** argv)
   rc = init_audio_subsystem(config_table);
   if (INIT_AUDIO_SYSTEM_OK != rc)
   {
-    game_exit("Audio subsystem could not be initialised.");
+    /*
+     * Don't exit just because we can't output audio. The audio code will
+     * handle this case.
+     */
+    DT_DEBUG_LOG("Audio subsystem could not be initialised\n");
+  }
+  else
+  {
+    DT_DEBUG_LOG("Audio subsystem created and initialized\n");
   }
 
   /*
@@ -399,6 +409,7 @@ int main(int argc, char** argv)
   {
     game_exit("Could not do opengl initialisation.");
   }
+  DT_DEBUG_LOG("OpenGL setup complete\n");
 
   /*
    * TODO: Proper font management system where more than one font can be loaded
@@ -415,6 +426,7 @@ int main(int argc, char** argv)
   {
     game_exit("Could not load up LucidaSansRegular font.");
   }
+  DT_DEBUG_LOG("Lucida sans regular font loaded\n");
 
   /*
    * TODO: Constants to move from here.
@@ -434,6 +446,7 @@ int main(int argc, char** argv)
     game_exit("Failed to create match state.");
   }
   init_pitch(match_state->pitch);
+  DT_DEBUG_LOG("Match state created and initialized\n");
 
   /*
    * Scale the pitch by an arbitrary amount to account for the otherwise small
@@ -449,6 +462,7 @@ int main(int argc, char** argv)
   {
     game_exit("Failed to load animation data.");
   }
+  DT_DEBUG_LOG("Animation data loaded\n");
 
   /*
    * Initialise the timings
@@ -468,12 +482,13 @@ int main(int argc, char** argv)
                                       AUTOMATON_EVENT_PULL_THROWN);
 
   /*
-   * Main game loop: Listen for events from the user and act on them.
+   * Game loop
    */
   while(true)
   {
     /*
-     * Reset the timer.
+     * Frame time is tracked so that we can determine how long to wait before
+     * displaying the next frame. i.e. to fix the FPS.
      */
     frame_start_time = SDL_GetTicks();
 
@@ -545,7 +560,7 @@ int main(int argc, char** argv)
      * in the game.
      *
      * WARNING - If this takes longer than the amount of time allocated per
-     * frame then there might be interesting problems in the frame refresh.
+     * frame then there might be 'interesting' problems in the frame refresh.
      */
     physics_time_delta = SDL_GetTicks() - last_physics_update;
     calculate_positions(match_state,

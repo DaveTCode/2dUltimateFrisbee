@@ -6,6 +6,7 @@
  */
 #include "dt_logger.h"
 
+#include <stdlib.h>
 #include <stddef.h>
 
 /*

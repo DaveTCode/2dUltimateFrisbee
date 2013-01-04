@@ -12,6 +12,7 @@
 #include "disc_path.h"
 #include "disc.h"
 #include "data_structures/vector.h"
+#include "physics.h"
 
 /*
  * create_disc_path

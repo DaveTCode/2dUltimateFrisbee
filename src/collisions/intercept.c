@@ -86,7 +86,7 @@ bool calculate_player_disc_path_intercept(PLAYER *player,
   DISC_POSITION *disc_position;
   float distance;
   bool found_intercept = false;
-  float time_to_reach;
+  float time_to_reach = 0.0;
 
   /*
    * Calculate the maximum distance that the player can travel between now and

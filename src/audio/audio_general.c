@@ -71,7 +71,7 @@ int init_audio_subsystem(StrMap *config_table)
   audio_device = alcOpenDevice(NULL);
   if (NULL == audio_device)
   {
-    DT_DEBUG_LOG("Failed to set up openal audio device: %s",
+    DT_DEBUG_LOG("Failed to set up openal audio device: %s\n",
                  audio_system_error(NULL));
     ret_code = INIT_AUDIO_SYSTEM_DEVICE_FAILED;
     goto EXIT_LABEL;
@@ -79,7 +79,7 @@ int init_audio_subsystem(StrMap *config_table)
   context = alcCreateContext(audio_device, NULL);
   if (NULL == context)
   {
-    DT_DEBUG_LOG("Failed to create openal context: %s",
+    DT_DEBUG_LOG("Failed to create openal context: %s\n",
                  audio_system_error(NULL));
     ret_code = INIT_AUDIO_SYSTEM_CONTEXT_FAILED;
     goto EXIT_LABEL;

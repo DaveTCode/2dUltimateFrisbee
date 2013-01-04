@@ -141,15 +141,15 @@ void create_disc_replica(DISC *replica, DISC *old_disc)
  * Parameters: disc - The disc object.
  *             throw - The completed throw object that caused this throw.
  */
-void set_init_disc_conditions(DISC *disc, DISC_THROW *throw)
+void set_init_disc_conditions(DISC *disc, DISC_THROW *disc_throw)
 {
   /*
    * Local Variables.
    */
-  float x_diff = ((float) throw->start_state->world_x) - disc->velocity.x;
-  float y_diff = ((float) throw->start_state->world_y) - disc->velocity.y;
-  float time_diff = (float) (throw->end_state->create_time -
-                             throw->start_state->create_time);
+  float x_diff = ((float) disc_throw->start_state->world_x) - disc->velocity.x;
+  float y_diff = ((float) disc_throw->start_state->world_y) - disc->velocity.y;
+  float time_diff = (float) (disc_throw->end_state->create_time -
+                             disc_throw->start_state->create_time);
   float adj_time_diff;
 
   /*
@@ -168,7 +168,7 @@ void set_init_disc_conditions(DISC *disc, DISC_THROW *throw)
   /*
    * Get the disc velocity from the x, y and time differences.
    */
-  disc->velocity = convert_throw_to_velocity(disc, throw);
+  disc->velocity = convert_throw_to_velocity(disc, disc_throw);
 
   /*
    * Calculate the initial speed of the disc.

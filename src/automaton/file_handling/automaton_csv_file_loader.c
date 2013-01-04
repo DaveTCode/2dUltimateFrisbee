@@ -289,7 +289,7 @@ int load_automaton_csv_file(char *filename, AUTOMATON *automaton)
   int ret_code = CSV_FILE_LOAD_OK;
   FILE *csv_file;
   char line[MAX_CSV_FILE_LINE_LEN];
-  char discard_char;
+  int discard_char;
   bool is_first_line = true;
   int *event_line;
   int rc;
